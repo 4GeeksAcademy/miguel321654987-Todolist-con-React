@@ -1,16 +1,16 @@
 /* Oculta el botón de eliminar por defecto */
-.delete-btn {
+.boton-borrar {
   opacity: 0;
   transition: opacity 0.3s ease-in-out;
   pointer-events: none; /* Impide clics invisibles */
 }
 
 /* Muestra el botón cuando se pasa el ratón sobre el elemento <li> contenedor */
-.task-item-hover:hover .delete-btn {
+.elemento-hover:hover .boton-borrar {
   opacity: 1;
   pointer-events: auto; /* Permite hacer clic cuando es visible */
 }
 
-.task-item-hover {
+.elemento-hover {
   cursor: pointer;
 }

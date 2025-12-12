@@ -5,19 +5,26 @@ const Home = () => {
 	const [tareas, setTareas] = useState([]);
 	const [inputTemporal, setInputTemporal] = useState('');
 
-	const handleKeyDown = (event) => {
-		// Verificamos si la tecla es 'Enter' Y el input no está vacío
-		if (event.key === 'Enter' && inputTemporal.trim() !== '') {
-			event.preventDefault(); // Previene el comportamiento por defecto (p. ej. recargar la página)
-			const nuevaTarea = { id: Date.now(), label: inputTemporal.trim() };
-			setTareas([...tareas, nuevaTarea]);
-			setInputTemporal(''); // Limpiamos el input
+	const eventoChange = (event) => {
+		setInputTemporal(event.target.value);
+	}
+
+	const eventoKeyDown = (event) => {
+		if (event.key === 'Enter') {
+			const nuevaTarea = { id: crypto.randomUUID(), label: inputTemporal };
+
+			setTareas([
+				...tareas,
+				nuevaTarea
+			]);
+
+			setInputTemporal(''); 
 		}
 	};
 
-	const removeTarea = (id) => {
-		const tareasRestantes = tareas.filter(tarea => tarea.id !== id);
-		setTareas(tareasRestantes);
+	const borrarTarea = (id) => {
+		const nuevasTareasFiltradas = tareas.filter(tarea => tarea.id !== id);
+		setTareas(nuevasTareasFiltradas);
 	};
 
 	return (
@@ -25,36 +32,36 @@ const Home = () => {
 			<h1>LISTA DE TAREAS</h1>
 			<div className="border border-blue">
 				<ul id="listaDeTareas" className="list-group mb-0 rounded-0">
-
-					{/* CORRECCIÓN CLAVE: onKeyDown debe ser un atributo del input */}
 					<li className="list-group-item">
 						<input
 							type="text"
 							className="form-control"
 							placeholder="¿Qué necesitas hacer hoy?"
 							value={inputTemporal}
-							onChange={(e) => setInputTemporal(e.target.value)}
-							onKeyDown={handleKeyDown}
+							onChange={eventoChange}
+							onKeyDown={eventoKeyDown}
 						/>
 					</li>
 
 					{tareas.length > 0 ? (
-						tareas.map((item) => (
-							<li
-								key={item.id}
-								className="list-group-item d-flex justify-content-between align-items-center task-item-hover"
+
+						tareas.map((tarea) => (
+							<li key={tarea.id}
+								className="list-group-item d-flex justify-content-between align-items-center elemento-hover"
 							>
-								<p className="m-0">{item.label}</p>
+								<p className="m-0">{tarea.label}</p>
 
 								<button
-									className="btn btn-danger btn-sm delete-btn"
-									onClick={() => removeTarea(item.id)}
+									className="boton-borrar btn btn-danger btn-sm"
+									onClick={() => borrarTarea(tarea.id)}
 								>
 									<i className="fa-solid fa-trash-can"></i>
 								</button>
 							</li>
 						))
+
 					) : (
+
 						<li className="list-group-item position-relative">
 							<p className="m-0">No hay tareas, añadir tareas</p>
 						</li>
