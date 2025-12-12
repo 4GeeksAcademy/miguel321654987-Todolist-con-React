@@ -28,8 +28,8 @@ const Home = () => {
 	};
 
 	return (
-		<div className="p-5">
-			<h1>LISTA DE TAREAS</h1>
+		<div className="p-5 m-5 bg-body-secondary">
+			<h1 className='text-center mb-5'>LISTA DE TAREAS</h1>
 			<div className="border border-blue">
 				<ul id="listaDeTareas" className="list-group mb-0 rounded-0">
 					<li className="list-group-item">
